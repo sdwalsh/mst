@@ -17,7 +17,7 @@ class Vertex<T> {
                 .anyMatch(x -> x.contains(v));
     }
 
-    private Optional<Edge<T>> containsEdge(Vertex<T> v) {
+    private Optional<Edge<T>> edge(Vertex<T> v) {
         return adjList.stream()
                 .filter(x -> x.contains(v))
                 .findFirst();
@@ -33,10 +33,11 @@ class Vertex<T> {
     }
 
     boolean removeEdge(Vertex<T> v) {
-        if (!this.hasEdge(v)) {
+        Optional<Edge<T>> e = this.edge(v);
+        if (!e.isPresent()) {
             return false;
         }
-        adjList.remove(this.containsEdge(v));
+        adjList.remove(e.get());
         return true;
     }
 }
