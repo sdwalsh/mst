@@ -23,7 +23,7 @@ class Vertex<T> {
                 .findFirst();
     }
 
-    boolean addEdge(Vertex<T> v, float weight) {
+    boolean addEdge(Vertex<T> v, T weight) {
         if (this.hasEdge(v)) {
             return false;
         }
