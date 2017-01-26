@@ -12,18 +12,18 @@ class Vertex<T> {
         this.vertex = vertex;
     }
 
-    private boolean hasEdge(Vertex<T> v) {
+    public boolean hasEdge(Vertex<T> v) {
         return adjList.stream()
                 .anyMatch(x -> x.contains(v));
     }
 
-    private Optional<Edge<T>> edge(Vertex<T> v) {
+    public Optional<Edge<T>> edge(Vertex<T> v) {
         return adjList.stream()
                 .filter(x -> x.contains(v))
                 .findFirst();
     }
 
-    boolean addEdge(Vertex<T> v, T weight) {
+    public boolean addEdge(Vertex<T> v, Comparable<T> weight) {
         if (this.hasEdge(v)) {
             return false;
         }
@@ -32,7 +32,7 @@ class Vertex<T> {
         return true;
     }
 
-    boolean removeEdge(Vertex<T> v) {
+    public boolean removeEdge(Vertex<T> v) {
         Optional<Edge<T>> e = this.edge(v);
         if (!e.isPresent()) {
             return false;
