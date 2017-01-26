@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class Vertex<T> {
+public class Vertex<T> {
     private T vertex;
     private List<Edge<T>> adjList = new ArrayList<>();
 

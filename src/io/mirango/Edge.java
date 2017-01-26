@@ -1,12 +1,12 @@
 package io.mirango;
 
-class Edge<T> {
+public class Edge<T> {
     private Vertex<T> vertex1;
     private Vertex<T> vertex2;
 
-    private Comparable weight;
+    private Comparable<T> weight;
 
-    public Edge(Vertex<T> a, Vertex<T> b, Comparable w) {
+    public Edge(Vertex<T> a, Vertex<T> b, Comparable<T> w) {
         this.vertex1 = a;
         this.vertex2 = b;
         this.weight = w;

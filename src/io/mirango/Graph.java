@@ -1,6 +1,6 @@
 package io.mirango;
 
-class Graph {
+public class Graph {
     Graph(int nVertex) {
 
     }
