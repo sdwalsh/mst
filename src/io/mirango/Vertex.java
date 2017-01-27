@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Vertex<T> {
+public class Vertex<T extends Point> {
     private T vertex;
-    private List<Edge<T>> adjList = new ArrayList<>();
+    private List<Edge<T>> adjList = new ArrayList<Edge<T>>();
+
+    public T getVertex() {
+        return vertex;
+    }
 
     public Vertex(T vertex) {
         this.vertex = vertex;
@@ -23,13 +27,17 @@ public class Vertex<T> {
                 .findFirst();
     }
 
-    public boolean addEdge(Vertex<T> v, Comparable<T> weight) {
+    public boolean addEdge(Vertex<T> v) {
         if (this.hasEdge(v)) {
             return false;
         }
-        Edge<T> edge = new Edge<>(this, v, weight);
+        Edge<T> edge = new Edge<>(this, v);
         adjList.add(edge);
         return true;
+    }
+
+    public List<Edge<T>> getAdjList() {
+        return adjList;
     }
 
     public boolean removeEdge(Vertex<T> v) {

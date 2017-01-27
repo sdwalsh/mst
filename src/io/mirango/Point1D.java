@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-public class Point1D implements Point<Point1D> {
+public class Point1D extends Point<Point1D> {
     private int x;
 
     public Point1D(int x) {
@@ -13,14 +13,14 @@ public class Point1D implements Point<Point1D> {
     }
 
     // Cannot define abstract static methods within the interface
-    static Point<Point1D> randomNew(Random ints) {
+    private static Point1D randomNew(Random ints) {
         return new Point1D(ints.nextInt());
     }
 
-    static List<Point<Point1D>> generatePoints(int n, Random ints) {
-        List<Point<Point1D>> points = new ArrayList<>();
+    static List<Point1D> generatePoints(int n, Random ints) {
+        List<Point1D> points = new ArrayList<>();
 
-        for (int x = 0; x <= n; x++) {
+        for (int x = 0; x < n; x++) {
             points.add(randomNew(ints));
         }
         return points;
@@ -30,7 +30,6 @@ public class Point1D implements Point<Point1D> {
         return this.x;
     }
 
-    @Override
     public double distance(Point1D p) {
         return Math.sqrt(Math.pow((this.x - p.getX()), 2));
     }

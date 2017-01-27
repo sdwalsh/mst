@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Point4D implements Point<Point4D> {
+public class Point4D extends Point<Point4D> {
     private int x;
     private int y;
     private int z;
@@ -18,9 +18,17 @@ public class Point4D implements Point<Point4D> {
     }
 
     // Cannot define abstract static methods within the interface
-    static Point<Point4D> randomNew(Random ints) {
-        Point<Point4D> point = new Point4D(ints.nextInt(), ints.nextInt(), ints.nextInt(), ints.nextInt());
-        return point;
+    private static Point4D randomNew(Random ints) {
+        return new Point4D(ints.nextInt(), ints.nextInt(), ints.nextInt(), ints.nextInt());
+    }
+
+    static List<Point4D> generatePoints(int n, Random ints) {
+        List<Point4D> points = new ArrayList<>();
+
+        for (int x = 0; x < n; x++) {
+            points.add(randomNew(ints));
+        }
+        return points;
     }
 
     public int getX() {
@@ -35,7 +43,6 @@ public class Point4D implements Point<Point4D> {
 
     public int getW() { return this.w; }
 
-    @Override
     public double distance(Point4D p) {
         return Math.sqrt(Math.pow((this.x - p.getX()), 2) + Math.pow((this.y - p.getY()), 2) + Math.pow((this.z - p.getZ()), 2) + Math.pow((this.w - p.getW()), 2));
     }
