@@ -1,10 +1,14 @@
 package io.mirango;
 
-public abstract class Point<T>{
+import java.util.ArrayList;
+import java.util.List;
 
-    public double weight(T p) {
+public interface Point<T>{
+
+    default double weight(T p) {
         return this.distance(p);
     }
-    public abstract double distance(T p);
+
+    double distance(T p);
 
 }

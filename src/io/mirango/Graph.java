@@ -6,7 +6,7 @@ import java.util.List;
 public class Graph<T> {
     private List<Vertex<T>> vertexList;
 
-    public Graph(T v) {
+    public Graph() {
         this.vertexList = new ArrayList<>();
     }
 
