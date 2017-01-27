@@ -1,7 +1,7 @@
 package io.mirango;
 
-public class Graph {
-    Graph(int nVertex) {
+public class Graph<T> {
+    private Graph() {
 
     }
 }

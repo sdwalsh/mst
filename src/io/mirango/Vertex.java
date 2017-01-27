@@ -8,7 +8,7 @@ public class Vertex<T> {
     private T vertex;
     private List<Edge<T>> adjList = new ArrayList<>();
 
-    Vertex(T vertex) {
+    public Vertex(T vertex) {
         this.vertex = vertex;
     }
 
