@@ -5,55 +5,55 @@ import java.util.List;
 import java.util.Random;
 
 public class Point {
-    private int x;
-    private int y;
-    private int z;
-    private int w;
+    private double x;
+    private double y;
+    private double z;
+    private double w;
 
-    public Point(int x, int y, int z, int w) {
+    public Point(double x, double y, double z, double w) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.w = w;
     }
 
-    private static Point randomNew(Random ints, int d) {
+    private static Point randomNew(Random rand, int d) {
         switch (d) {
             case 1:
-                return new Point(ints.nextInt(), 0, 0, 0);
+                return new Point(rand.nextDouble(), 0.0, 0.0, 0.0);
             case 2:
-                return new Point(ints.nextInt(), ints.nextInt(), 0, 0);
+                return new Point(rand.nextDouble(), rand.nextDouble(), 0.0, 0.0);
             case 3:
-                return new Point(ints.nextInt(), ints.nextInt(), ints.nextInt(), 0);
+                return new Point(rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), 0.0);
             case 4:
-                return new Point(ints.nextInt(), ints.nextInt(), ints.nextInt(), ints.nextInt());
+                return new Point(rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
             default:
-                return new Point(0, 0, 0, 0);
+                return new Point(0.0, 0.0, 0.0, 0.0);
         }
     }
 
-    static List<Point> generatePoints(int n, int d, Random ints) {
+    public static List<Point> generatePoints(int n, int d, Random rand) {
         List<Point> points = new ArrayList<>();
 
         for (int x = 0; x < n; x++) {
-            points.add(randomNew(ints, d));
+            points.add(randomNew(rand, d));
         }
         return points;
     }
 
-    public int getX() {
+    public double getX() {
         return this.x;
     }
 
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
-    public int getZ() {
+    public double getZ() {
         return this.z;
     }
 
-    public int getW() {
+    public double getW() {
         return this.w;
     }
 
