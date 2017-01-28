@@ -9,7 +9,7 @@ public class Edge<T extends Point> {
     public Edge(Vertex<T> a, Vertex<T> b) {
         this.vertex1 = a;
         this.vertex2 = b;
-        this.weight = a.getVertex().distance(b.getVertex());
+        this.weight = getDistance(a.getVertex(), b.getVertex());
     }
 
     private double getDistance(Point a, Point b) {

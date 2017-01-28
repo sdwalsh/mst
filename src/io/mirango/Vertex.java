@@ -6,14 +6,14 @@ import java.util.Optional;
 
 public class Vertex<T extends Point> {
     private T vertex;
-    private List<Edge<T>> adjList = new ArrayList<Edge<T>>();
-
-    public T getVertex() {
-        return vertex;
-    }
+    private List<Edge<T>> adjList = new ArrayList<>();
 
     public Vertex(T vertex) {
         this.vertex = vertex;
+    }
+
+    public T getVertex() {
+        return vertex;
     }
 
     public boolean hasEdge(Vertex<T> v) {
@@ -28,12 +28,16 @@ public class Vertex<T extends Point> {
     }
 
     public boolean addEdge(Vertex<T> v) {
-        if (this.hasEdge(v)) {
+        if (this.hasEdge(v) || this.equals(v)) {
             return false;
         }
         Edge<T> edge = new Edge<>(this, v);
         adjList.add(edge);
         return true;
+    }
+
+    public void addEdges(List<Vertex<T>> v) {
+        v.forEach(this::addEdge);
     }
 
     public List<Edge<T>> getAdjList() {
