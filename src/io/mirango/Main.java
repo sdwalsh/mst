@@ -1,6 +1,7 @@
 package io.mirango;
 
 import java.util.Random;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,14 +22,9 @@ public class Main {
         Random rand = new Random();
         Graph<Point> graph = new Graph<>();
 
-
-        // Generate points and add to graph as a vertex
         Point.generatePoints(numpoints, dimension, rand)
                 .forEach(graph::addVertex);
 
-        //ListIterator lit = graph.getVertexList().listIterator();
-
-        // Generate edges for each vertex (complete graph)
         graph.getVertexList().forEach(x -> x.addEdges(graph.getVertexList()));
 
         graph.getVertexList().forEach
@@ -40,6 +36,6 @@ public class Main {
                 (x -> System.out.println(x.getAdjList().size()));
         System.out.println(graph.getVertexList().size());
 
+        Set<Edge<Point>> s = Kruskal.run(graph);
     }
-
 }

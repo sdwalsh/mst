@@ -1,9 +1,10 @@
 package io.mirango;
 
-public class Edge<T extends Point> {
+import org.jetbrains.annotations.NotNull;
+
+public class Edge<T extends Point> implements Comparable<Edge<T>> {
     private Vertex<T> vertex1;
     private Vertex<T> vertex2;
-
     private double weight;
 
     public Edge(Vertex<T> a, Vertex<T> b) {
@@ -16,7 +17,25 @@ public class Edge<T extends Point> {
         return a.distance(b);
     }
 
-    public Comparable getWeight() {
+    public int compareTo(@NotNull Edge e) {
+        if (this.getWeight() > e.getWeight()) {
+            return 1;
+        } else if (this.getWeight() < e.getWeight()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    public Vertex<T> getVertex1() {
+        return vertex1;
+    }
+
+    public Vertex<T> getVertex2() {
+        return vertex2;
+    }
+
+    public double getWeight() {
         return weight;
     }
 
