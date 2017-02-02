@@ -6,18 +6,18 @@ public class Kruskal {
     public static Set<Edge<Point>> run(Graph<Point> graph) {
         Set<Edge<Point>> s = new HashSet<>();
         List<Edge<Point>> edgeList = new ArrayList<>();
-        UnionFind u = new UnionFind(graph.getVertexList().stream());
+        UnionFind u = new UnionFind(graph.getVertexList());
 
-        graph.getVertexList().forEach(x -> {
-            edgeList.addAll(x.getAdjList());
-
-        });
+        edgeList.addAll(graph.getEdgeSet());
         Collections.sort(edgeList);
 
         edgeList.forEach(x -> {
-            if (u.find(x.getVertex1()).equals(x.getVertex2())) {
+            Iterator<Vertex<Point>> v = x.getVertices().iterator();
+            Vertex<Point> v1 = v.next();
+            Vertex<Point> v2 = v.next();
+            if (!(u.find(v1).equals(u.find(v2)))) {
                 s.add(x);
-                u.union(x.getVertex1(), x.getVertex2());
+                u.union(v1, v2);
             }
         });
         return s;

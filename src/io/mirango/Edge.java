@@ -2,14 +2,17 @@ package io.mirango;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 public class Edge<T extends Point> implements Comparable<Edge<T>> {
-    private Vertex<T> vertex1;
-    private Vertex<T> vertex2;
+    private Set<Vertex<T>> s = new HashSet<>();
     private double weight;
 
     public Edge(Vertex<T> a, Vertex<T> b) {
-        this.vertex1 = a;
-        this.vertex2 = b;
+        this.s.add(a);
+        this.s.add(b);
         this.weight = getDistance(a.getVertex(), b.getVertex());
     }
 
@@ -27,12 +30,8 @@ public class Edge<T extends Point> implements Comparable<Edge<T>> {
         }
     }
 
-    public Vertex<T> getVertex1() {
-        return vertex1;
-    }
-
-    public Vertex<T> getVertex2() {
-        return vertex2;
+    public Set<Vertex<T>> getVertices() {
+        return s;
     }
 
     public double getWeight() {
@@ -40,6 +39,10 @@ public class Edge<T extends Point> implements Comparable<Edge<T>> {
     }
 
     public boolean contains(Vertex<T> a) {
-        return vertex1.equals(a) || vertex2.equals(a);
+        return s.contains(a);
+    }
+
+    public Optional<Vertex<T>> other(Vertex<T> a) {
+        return s.stream().filter(b -> b != a).findFirst();
     }
 }

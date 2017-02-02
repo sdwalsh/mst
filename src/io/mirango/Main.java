@@ -5,6 +5,11 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+        // Time logging
+        long startTime;
+        long endTime;
+        long duration;
+
         if (args.length != 4) {
             System.err.println("Number of arguments error");
             System.exit(-1);
@@ -22,20 +27,41 @@ public class Main {
         Random rand = new Random();
         Graph<Point> graph = new Graph<>();
 
+        System.out.println("Begin Generation of Points");
+        startTime = System.nanoTime();
         Point.generatePoints(numpoints, dimension, rand)
                 .forEach(graph::addVertex);
+        endTime = System.nanoTime();
+        System.out.println("End Generation of Points");
+        duration = endTime - startTime;
+        System.out.print(duration / 1000000);
+        System.out.println("ms");
 
-        graph.getVertexList().forEach(x -> x.addEdges(graph.getVertexList()));
+        System.out.println("Add Edges");
+        startTime = System.nanoTime();
+        graph.addEdges();
+        endTime = System.nanoTime();
+        System.out.println("Finished Adding Edges");
+        duration = endTime - startTime;
+        System.out.print(duration / 1000000);
+        System.out.println("ms");
 
-        graph.getVertexList().forEach
-                (x -> x.getAdjList().forEach
-                        (u -> System.out.println(u.getWeight())));
-
-        int count = 0;
-        graph.getVertexList().forEach
-                (x -> System.out.println(x.getAdjList().size()));
         System.out.println(graph.getVertexList().size());
 
+        System.out.println("Run Kruskal to find MST");
+        startTime = System.nanoTime();
         Set<Edge<Point>> s = Kruskal.run(graph);
+        endTime = System.nanoTime();
+        duration = endTime - startTime;
+        System.out.print(duration / 1000000);
+        System.out.println("ms");
+        System.out.println();
+        System.out.println(s.size());
+
+        Double totalWeight = s.stream().mapToDouble(Edge::getWeight).sum();
+        System.out.println(totalWeight);
+
+        //List<Double> weights = new ArrayList<>();
+        //s.forEach(x -> weights.add(x.getWeight()));
     }
 }
