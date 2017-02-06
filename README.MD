@@ -3,6 +3,18 @@ MST
 
 Finding the MST of a complete graph
 
+## Why find a function to reduce edges
+
+The most computationally intensive step of the program is the instantiation and storage of edges.  At a point the JVM will be unable to allocate enough memory for a large enough set of vertices.
+
+```Java
+There is insufficient memory for the Java Runtime Environment to continue.
+Native memory allocation (mmap) failed to map 1096810496 bytes for committing reserved memory.
+```
+
+## Largest Edge by Number of Vertices
+
+Third degree polynomial fit
 ```R
 Call:
 lm(formula = y ~ poly(x, 3, raw = TRUE), data = d)
