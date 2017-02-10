@@ -1,7 +1,11 @@
 package io.mirango;
 
-import java.util.Random;
-import java.util.Set;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +14,10 @@ public class Main {
         long endTime;
         long duration;
 
+        List<String> log = new ArrayList<>();
+        Path file = Paths.get("max-edge-mst.txt");
+
+        // Grab all arguments quit if too few arguments or arguments are unacceptable
         if (args.length != 4) {
             System.err.println("Number of arguments error");
             System.exit(-1);
@@ -18,50 +26,42 @@ public class Main {
         int numpoints = Integer.parseInt(args[1]);
         int numtrials = Integer.parseInt(args[2]);
         int dimension = Integer.parseInt(args[3]);
-
         if (dimension < 0 || dimension > 4) {
             System.err.println("Dimension error");
             System.exit(-1);
         }
 
-        Random rand = new Random();
-        Graph<Point> graph = new Graph<>();
+        // Number of vertices
+        for (int x = 5; x < 3000; x += 25) {
+            // Number of trials per vertex #
+            System.out.println(x);
+            for (int y = 0; y < 10; y++) {
+                Random rand = new Random(System.nanoTime());
+                Graph<Point> graph = new Graph<>();
 
-        System.out.println("Begin Generation of Points");
-        startTime = System.nanoTime();
-        Point.generatePoints(numpoints, dimension, rand)
-                .forEach(graph::addVertex);
-        endTime = System.nanoTime();
-        System.out.println("End Generation of Points");
-        duration = endTime - startTime;
-        System.out.print(duration / 1000000);
-        System.out.println("ms");
+                Point.generatePoints(x, 2, rand)
+                        .forEach(graph::addVertex);
 
-        System.out.println("Add Edges");
-        startTime = System.nanoTime();
-        graph.addEdges();
-        endTime = System.nanoTime();
-        System.out.println("Finished Adding Edges");
-        duration = endTime - startTime;
-        System.out.print(duration / 1000000);
-        System.out.println("ms");
+                graph.addEdges();
 
-        System.out.println(graph.getVertexList().size());
+                Set<Edge<Point>> s = Kruskal.run(graph);
 
-        System.out.println("Run Kruskal to find MST");
-        startTime = System.nanoTime();
-        Set<Edge<Point>> s = Kruskal.run(graph);
-        endTime = System.nanoTime();
-        duration = endTime - startTime;
-        System.out.print(duration / 1000000);
-        System.out.println("ms");
-        System.out.println();
-        System.out.println(s.size());
+                Double totalWeight = s.stream().mapToDouble(Edge::getWeight).sum();
 
-        Double totalWeight = s.stream().mapToDouble(Edge::getWeight).sum();
-        System.out.println(totalWeight);
+                List<Edge<Point>> edgeList = new ArrayList<>();
+                edgeList.addAll(s);
+                Collections.sort(edgeList);
 
-        //List<Double> weights = new ArrayList<>();
-        //s.forEach(x -> weights.add(x.getWeight()));
+                // Create comma separated values of x and y
+                log.add(x + "," + edgeList.get(edgeList.size() - 1).getWeight());
+                System.out.println(edgeList.get(edgeList.size() - 1).getWeight());
+            }
+        }
+
+        try {
+            Files.write(file, log, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            System.err.println("Error writing to file");
+        }
     }
 }

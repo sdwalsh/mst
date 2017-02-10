@@ -10,10 +10,10 @@ public class Edge<T extends Point> implements Comparable<Edge<T>> {
     private Set<Vertex<T>> s = new HashSet<>();
     private double weight;
 
-    public Edge(Vertex<T> a, Vertex<T> b) {
+    public Edge(Vertex<T> a, Vertex<T> b, double weight) {
         this.s.add(a);
         this.s.add(b);
-        this.weight = getDistance(a.getVertex(), b.getVertex());
+        this.weight = weight;
     }
 
     private double getDistance(Point a, Point b) {
